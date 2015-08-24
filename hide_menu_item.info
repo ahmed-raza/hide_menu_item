@@ -1,0 +1,6 @@
+name = Hide Menu Item
+description = Hides a menu item on defined pages.
+version = 7.x-1.0
+core = 7.x
+package = Menu
+configure = admin/config/hide_menu_item
