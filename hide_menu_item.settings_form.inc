@@ -17,13 +17,20 @@ function hide_menu_item_configuration_form($node, &$form_state){
 
   foreach ($menus as $key => $value) {
     // dsm($key);
-    // dsm(menu_tree_all_data($key, $link = NULL, $max_depth = NULL));
-    $form['menus'][$key] = array(
-      '#type'=>'checkbox',
-      '#title'=>t($value),
-      '#default_value'=>0,
-      '#access'=>TRUE,
-      );
+    if ($key == 'management') {
+      unset($menus[$key]);
+    }
+    $menu_items = menu_load_links($key);
+    dsm($menu_items);
+    // foreach ($menu_items as $key => $value) {
+    //   // dsm($value);
+    //   $form['menus'][$key] = array(
+    //     '#type'=>'checkbox',
+    //     '#title'=>t($value['link_title']),
+    //     '#default_value'=>0,
+    //     '#access'=>TRUE,
+    //     );
+    // }
   }
 
   $form['config_submit'] = array(
