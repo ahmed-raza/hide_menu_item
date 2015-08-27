@@ -28,10 +28,6 @@ function hide_menu_item_configuration_form($node, &$form_state){
   $indexCompleted = array_search('User menu', $menus);
   unset($menus[$indexCompleted]);
   foreach ($menus as $key => $value) {
-    // dsm($value);
-    //  if ($key == 'management' || $key == 'devel' || $key == 'features' || $key == 'navigation' || $key == 'menu-site-menu' || $key == 'user-menu') {
-    //   unset($menus[$key]);
-    // }
      $form['menus'][$value] = array(
     '#type'=>'fieldset',
     '#title'=>t($value),
@@ -43,22 +39,24 @@ function hide_menu_item_configuration_form($node, &$form_state){
     $menu_items = menu_load_links($key);
     // dsm($menu_items);
     foreach ($menu_items as $key => $values) {
-      //dsm($key);
-      $form['menus'][$value][$key] = array(
-        '#type'=>'checkbox',
-        '#title'=>t($values['link_title']),
-        '#default_value'=>0,
-        '#value'=>'test',
-        '#access'=>TRUE,
-        '#prefix'=>'<div class="'.$value.' '.$values['link_title'].' hide">',
-        '#suffix'=>'</div>',
+      // dsm($values);
+      $form['menus'][$value]['items'][$key] = array(
+        '#type' => 'checkboxes',
+        '#options' => drupal_map_assoc(array($values['link_title'])),
+        // '#type'=>'checkbox',
+        // '#title'=>t($values['link_title']),
+        // '#default_value'=>0,
+        // '#value'=>$values['link_title'],
+        // '#access'=>TRUE,
+        // '#prefix'=>'<div class="'.$value.' '.$values['link_title'].' hide">',
+        // '#suffix'=>'</div>',
         );
       $form['menus'][$value]['urls'] = array(
         '#type'=>'textarea',
         '#title'=>t('Enter URLs'),
-        '#default_value'=>0,
         '#access'=>TRUE,
-        '#weight'=>1
+        '#weight'=>1,
+        '#description'=>t('Enter the urls where you want to hide these menus sparated by commas.')
         );
     }
   }
@@ -71,9 +69,7 @@ function hide_menu_item_configuration_form($node, &$form_state){
 }
 
  function hide_menu_item_configuration_form_submit(&$form, &$form_state){
-//   $types = node_type_get_types();
-//   $total_types = count($types);
-//   $sliced_array = array_slice($form_state['values'], 0, $total_types);
+  dsm($form_state);
 //   foreach ($sliced_array as $key => $value) {
 //     if ($value == 1) {
 //       $save = array('type'=>$key);
@@ -81,21 +77,21 @@ function hide_menu_item_configuration_form($node, &$form_state){
 //     }
 //   }
 
-      dsm($form);
-      global $user;
-      $main_menu_record = array(
-                                'userID'=>$user->uid,
-                                'main-menu-ID'=>$form_state['values']['name'],
-                                'main-menu-name'=>$form['menus']['Main menu']['#title'],
-                                );
-      $sub_menu_record = array(
-                                'submenu_id'=>$user->uid,
-                                'main-menu-machineName'=>$form_state['values']['name'],
-                                'submenu-menu-name'=>$form_state['values']['email'],
-                                );
-      menu_set_data($main_menu_record);
-      dsm($main_menu_record);
-      drupal_set_message(t('Settings saved'));
+      // dsm($form);
+      // global $user;
+      // $main_menu_record = array(
+      //                           'userID'=>$user->uid,
+      //                           'main-menu-ID'=>$form_state['values']['name'],
+      //                           'main-menu-name'=>$form['menus']['Main menu']['#title'],
+      //                           );
+      // $sub_menu_record = array(
+      //                           'submenu_id'=>$user->uid,
+      //                           'main-menu-machineName'=>$form_state['values']['name'],
+      //                           'submenu-menu-name'=>$form_state['values']['email'],
+      //                           );
+      // menu_set_data($main_menu_record);
+      // dsm($main_menu_record);
+      // drupal_set_message(t('Settings saved'));
 
 
 
