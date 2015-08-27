@@ -1,0 +1,59 @@
+<?php
+/*
+  Implementing hook_schema
+*/
+
+function hide_menu_item_schema(){
+  $schema = array();
+  $schema['hide_menu_item_main'] = array(
+    'desciption'=>'This table holds the main menu id and machine name.',
+    'fields'=>array(
+      'id'=>array(
+        'desciption'=>'Unique identifier of menu.',
+        'type'=>'serial',
+        'not null'=>TRUE,
+        ),
+      'menu_name'=>array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Menu name.',
+        'translatable' => TRUE,
+        ),
+      ),
+    'primary key' => array('id'),
+    );
+  $schema['hide_menu_item_child_menu'] = array(
+    'desciption'=>'This table stores the child menus.',
+    'fields'=>array(
+      'id'=>array(
+        'desciption'=>'Unique identifier of menu item.',
+        'type'=>'serial',
+        'not null'=>TRUE,
+        ),
+      'item_id'=>array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Menu item ID.",
+        ),
+      'item_name'=>array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Menu item name.',
+        'translatable' => TRUE,
+        ),
+      'urls'=>array(
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big',
+        'description' => 'Comma-separated list of URLs.',
+        ),
+      ),
+    'primary key' => array('id'),
+    );
+  return $schema;
+}
