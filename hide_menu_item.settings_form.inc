@@ -14,25 +14,45 @@ function hide_menu_item_configuration_form($node, &$form_state){
     );
 
   $menus = menu_get_menus($all = TRUE);
-
+  //print_r($menus);
+  $indexCompleted = array_search('Development', $menus);
+  unset($menus[$indexCompleted]);
+  $indexCompleted = array_search('Features', $menus);
+  unset($menus[$indexCompleted]);
+  $indexCompleted = array_search('Management', $menus);
+  unset($menus[$indexCompleted]);
+  $indexCompleted = array_search('Navigation', $menus);
+  unset($menus[$indexCompleted]);
+  $indexCompleted = array_search('Site Menu', $menus);
+  unset($menus[$indexCompleted]);
+  $indexCompleted = array_search('User menu', $menus);
+  unset($menus[$indexCompleted]);
+  //print_r($menus);
   foreach ($menus as $key => $value) {
-    // dsm($key);
-    if ($key == 'management') {
-      unset($menus[$key]);
-    }
-    $menu_items = menu_load_links($key);
-    dsm($menu_items);
-    // foreach ($menu_items as $key => $value) {
-    //   // dsm($value);
-    //   $form['menus'][$key] = array(
-    //     '#type'=>'checkbox',
-    //     '#title'=>t($value['link_title']),
-    //     '#default_value'=>0,
-    //     '#access'=>TRUE,
-    //     );
+    // print $key;
+    //  if ($key == 'management' || $key == 'devel' || $key == 'features' || $key == 'navigation' || $key == 'menu-site-menu' || $key == 'user-menu') {
+    //   unset($menus[$key]);
     // }
-  }
+     $form['menus'][$value] = array(
+    '#type'=>'fieldset',
+    '#title'=>t($value),
+    );
 
+
+    $menu_items = menu_load_links($key);
+    //dsm($menu_items);
+    foreach ($menu_items as $key => $values) {
+      //dsm($value);
+      $form['menus'][$key] = array(
+        '#type'=>'checkbox',
+        '#title'=>t($values['link_title']),
+        '#default_value'=>0,
+        '#access'=>TRUE,
+        '#prefix'=>'<div class="'.$value.' '.$values['link_title'].' hide">',
+        '#suffix'=>'</div>',
+        );
+    }
+  }
   $form['config_submit'] = array(
     '#type'=>'submit',
     '#value'=>'Save configuration',
