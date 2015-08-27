@@ -70,6 +70,23 @@ function hide_menu_item_configuration_form($node, &$form_state){
 
  function hide_menu_item_configuration_form_submit(&$form, &$form_state){
   dsm($form_state);
+  $allValues = $form_state['values'];
+  $urls = $form_state['values']['urls'];
+  foreach ($allValues as $key => $value) {
+    if (!is_int($key)) {
+        unset($allValues[$key]);
+    }
+  }
+  //dsm($allValues);
+  foreach($allValues as $menu_link){
+    foreach($menu_link as $keyNew => $valueNew){
+      if(!empty($valueNew)){
+        dsm($valueNew);
+      }
+
+    }
+
+  }
 //   foreach ($sliced_array as $key => $value) {
 //     if ($value == 1) {
 //       $save = array('type'=>$key);
@@ -89,7 +106,7 @@ function hide_menu_item_configuration_form($node, &$form_state){
       //                           'main-menu-machineName'=>$form_state['values']['name'],
       //                           'submenu-menu-name'=>$form_state['values']['email'],
       //                           );
-      // menu_set_data($main_menu_record);
+      //menu_set_data($main_menu_record);
       // dsm($main_menu_record);
       // drupal_set_message(t('Settings saved'));
 
