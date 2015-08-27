@@ -3,6 +3,6 @@ description = Hides a menu item on defined pages.
 version = 7.x-1.0
 core = 7.x
 package = Menu
-configure = admin/config/hide_menu_item
+configure = admin/structure/menu/hide_menu_item
 stylesheets[all][] = hide_menu.css
 scripts[] = hide_menu.js

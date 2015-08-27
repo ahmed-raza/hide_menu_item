@@ -10,7 +10,7 @@ function hide_menu_item_menu(){
     'page callback'=>'hide_menu_item_config',
     'access callback'=>'user_access',
     'access arguments'=>array('administer access control'),
-    'file'=>'hide_menu_item.settings_form.inc',
+    'file'=>'/settings/hide_menu_item.settings_form.inc',
     );
   return $items;
 }
