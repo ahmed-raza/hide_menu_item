@@ -27,29 +27,38 @@ function hide_menu_item_configuration_form($node, &$form_state){
   unset($menus[$indexCompleted]);
   $indexCompleted = array_search('User menu', $menus);
   unset($menus[$indexCompleted]);
-  //print_r($menus);
   foreach ($menus as $key => $value) {
-    // print $key;
+    // dsm($value);
     //  if ($key == 'management' || $key == 'devel' || $key == 'features' || $key == 'navigation' || $key == 'menu-site-menu' || $key == 'user-menu') {
     //   unset($menus[$key]);
     // }
      $form['menus'][$value] = array(
     '#type'=>'fieldset',
     '#title'=>t($value),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
     );
 
 
     $menu_items = menu_load_links($key);
-    //dsm($menu_items);
+    // dsm($menu_items);
     foreach ($menu_items as $key => $values) {
-      //dsm($value);
-      $form['menus'][$key] = array(
+      //dsm($key);
+      $form['menus'][$value][$key] = array(
         '#type'=>'checkbox',
         '#title'=>t($values['link_title']),
         '#default_value'=>0,
+        '#value'=>'test',
         '#access'=>TRUE,
         '#prefix'=>'<div class="'.$value.' '.$values['link_title'].' hide">',
         '#suffix'=>'</div>',
+        );
+      $form['menus'][$value]['urls'] = array(
+        '#type'=>'textarea',
+        '#title'=>t('Enter URLs'),
+        '#default_value'=>0,
+        '#access'=>TRUE,
+        '#weight'=>1
         );
     }
   }
@@ -61,7 +70,7 @@ function hide_menu_item_configuration_form($node, &$form_state){
   return $form;
 }
 
-// function hide_menu_item_configuration_form_submit(&$form, &$form_state){
+ function hide_menu_item_configuration_form_submit(&$form, &$form_state){
 //   $types = node_type_get_types();
 //   $total_types = count($types);
 //   $sliced_array = array_slice($form_state['values'], 0, $total_types);
@@ -71,4 +80,23 @@ function hide_menu_item_configuration_form($node, &$form_state){
 //       dsm($save);
 //     }
 //   }
-// }
+
+      dsm($form);
+      global $user;
+      $main_menu_record = array(
+                                'userID'=>$user->uid,
+                                'main-menu-ID'=>$form_state['values']['name'],
+                                'main-menu-name'=>$form['menus']['Main menu']['#title'],
+                                );
+      $sub_menu_record = array(
+                                'submenu_id'=>$user->uid,
+                                'main-menu-machineName'=>$form_state['values']['name'],
+                                'submenu-menu-name'=>$form_state['values']['email'],
+                                );
+      menu_set_data($main_menu_record);
+      dsm($main_menu_record);
+      drupal_set_message(t('Settings saved'));
+
+
+
+ }

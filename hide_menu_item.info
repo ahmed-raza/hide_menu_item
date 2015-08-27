@@ -4,5 +4,5 @@ version = 7.x-1.0
 core = 7.x
 package = Menu
 configure = admin/structure/menu/hide_menu_item
-stylesheets[all][] = hide_menu.css
-scripts[] = hide_menu.js
+stylesheets[all][] = assets/hide_menu.css
+scripts[] = assets/hide_menu.js
